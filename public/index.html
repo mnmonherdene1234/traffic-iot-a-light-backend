@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Wifi TEST</title>
+  </head>
+  <body>
+    <button onclick="changeLight()">CHANGE</button>
+    <p id="status">-</p>
+    <script>
+      const statusP = document.getElementById("status");
+
+      function fetchLight() {
+        fetch("/light").then(async (response) => {
+          const data = await response.json();
+          statusP.innerHTML = data?.on ? "ON" : "OFF";
+        });
+      }
+
+      function changeLight() {
+        fetch("/light", {
+          method: "POST",
+        }).then(fetchLight);
+      }
+
+      fetchLight();
+    </script>
+  </body>
+</html>
